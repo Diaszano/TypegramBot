@@ -1,1 +1,3 @@
-console.log('oi');
+import logger from './app/libs/Logger';
+
+logger.warn('oi');
