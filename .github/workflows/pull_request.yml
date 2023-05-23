@@ -23,24 +23,24 @@ jobs:
       - run: npm ci
       - run: npm ts-prune --error
 
-    tests:
-      runs-on: ubuntu-latest
-      needs: unused-exports
-      steps:
-        - uses: actions/checkout@v3
-        - uses: actions/setup-node@v3
-          with:
-            node-version: 18.x
-        - run: npm ci
-        - run: npm run test
+  tests:
+    runs-on: ubuntu-latest
+    needs: unused-exports
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - run: npm ci
+      - run: npm run test
 
-    build:
-      runs-on: ubuntu-latest
-      needs: unused-exports
-      steps:
-        - uses: actions/checkout@v3
-        - uses: actions/setup-node@v3
-          with:
-            node-version: 18.x
-        - run: npm ci
-        - run: npm run build
+  build:
+    runs-on: ubuntu-latest
+    needs: unused-exports
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - run: npm ci
+      - run: npm run build
