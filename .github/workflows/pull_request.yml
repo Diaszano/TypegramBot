@@ -8,13 +8,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
       - name: Install Nodejs
       - uses: actions/setup-node@v3
         with:
           node-version: 18.x
       - name: Install dependencies
-        run: npm ci
+      - run: npm ci
 
   unused-exports:
     name: Find unused exports (dead code)
@@ -22,15 +22,15 @@ jobs:
     needs: install
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
       - name: Install Nodejs
       - uses: actions/setup-node@v3
         with:
           node-version: 18.x
       - name: Install dependencies
-        run: npm ci
+      - run: npm ci
       - name: Run ts-prune
-        run: npm ts-prune --error
+      - run: npm ts-prune --error
 
     tests:
       name: Run the tests
@@ -38,15 +38,15 @@ jobs:
       needs: unused-exports
       steps:
         - name: Checkout
-          uses: actions/checkout@v3
+        - uses: actions/checkout@v3
         - name: Install Nodejs
         - uses: actions/setup-node@v3
           with:
             node-version: 18.x
         - name: Install dependencies
-          run: npm ci
+        - run: npm ci
         - name: Run test
-          run: npm run test
+        - run: npm run test
 
     build:
       name: Build the project
@@ -54,12 +54,12 @@ jobs:
       needs: unused-exports
       steps:
         - name: Checkout
-          uses: actions/checkout@v3
+        - uses: actions/checkout@v3
         - name: Install Nodejs
         - uses: actions/setup-node@v3
           with:
             node-version: 18.x
         - name: Install dependencies
-          run: npm ci
+        - run: npm ci
         - name: Build project
-          run: npm run build
+        - run: npm run build
