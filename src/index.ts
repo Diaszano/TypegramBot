@@ -3,4 +3,6 @@ import logger from './app/libs/Logger';
 import cache from './app/libs/Cache';
 
 logger.warn('oi');
-cache.has('ping');
+const a = cache.has('ping');
+
+console.log(a);
