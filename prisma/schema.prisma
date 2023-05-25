@@ -13,9 +13,34 @@ datasource db {
 model User {
   id          String   @id @default(uuid()) @db.Uuid
   name        String?
+  orders      Order[]
   telegram_id Int      @unique
   created_at  DateTime @default(now())
   updated_at  DateTime @default(now()) @updatedAt
 
   @@index([id, telegram_id])
+}
+
+model Order {
+  id         String   @id @default(uuid()) @db.Uuid
+  name       String?
+  User       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String   @db.Uuid
+  Tracking   Tracking @relation(fields: [trackingId], references: [id], onDelete: Cascade)
+  trackingId String   @db.Uuid
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  @@index([id])
+}
+
+model Tracking {
+  id         String   @id @default(uuid()) @db.Uuid
+  code       String   @unique @db.VarChar(13)
+  data       Json
+  orders     Order[]
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  @@index([id, code])
 }
