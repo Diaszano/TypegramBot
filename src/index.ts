@@ -27,6 +27,7 @@ async function run(): Promise<void> {
       `O tempo total para responder o usuário ${name} foi de ${elapsedTime} segundos.`,
     );
   });
+
   telegram.on(message('text'), async (ctx): Promise<void> => {
     await ctx.reply(`Oii ${ctx.from?.username}`);
   });
