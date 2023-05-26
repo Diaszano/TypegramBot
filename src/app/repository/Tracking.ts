@@ -35,20 +35,27 @@ class Tracking {
     });
     const track: string = JSON.stringify(await this.__linketrack.track(code));
 
-    // if (tracking_prisma === null) {
-    //   return this.__prisma.tracking.create({
-    //     data: {
-    //       code,
-    //       data: track,
-    //     },
-    //   });
-    // }
-    //
-    // if (tracking_prisma.data === track) {
-    //   await this.__cache.set(key, JSON.stringify(tracking_prisma), 900);
-    //   return tracking_prisma;
-    // }
-    // return null;
+    if (tracking_prisma === null) {
+      const new_tracking = await this.__prisma.tracking.create({
+        data: { code: code, data: track },
+      });
+
+      await this.__cache.set(key, JSON.stringify(new_tracking), 900);
+      return new_tracking;
+    }
+
+    if (tracking_prisma.data === track) {
+      await this.__cache.set(key, JSON.stringify(tracking_prisma), 900);
+      return tracking_prisma;
+    }
+
+    const update_tracking = await this.__prisma.tracking.update({
+      where: { code },
+      data: { data: track },
+    });
+
+    await this.__cache.set(key, JSON.stringify(update_tracking), 900);
+    return update_tracking;
   }
 }
 
