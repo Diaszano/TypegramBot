@@ -37,7 +37,7 @@ model Order {
 model Tracking {
   id         String   @id @default(uuid()) @db.Uuid
   code       String   @unique @db.VarChar(13)
-  data       Json
+  data       String   @db.Text
   orders     Order[]
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
